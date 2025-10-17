@@ -1,0 +1,97 @@
+package ${package.Controller};
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import com.hit.telemetry_parser.common.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import jakarta.annotation.Resource;
+
+import $!{package.Service}.$!{table.serviceName};
+import ${package.Entity}.${entity};
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+#if(${swagger})
+import io.swagger.v3.oas.annotations.tags.Tag;
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@Tag(name = "${entity}Controller" , description = "前端控制器")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+    #if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+    #else
+public class ${table.controllerName} {
+    #end
+
+    @Resource
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    @Operation(summary = "增/改")
+    @PostMapping
+    public Result<Boolean> save(@RequestBody ${entity} ${table.entityPath}) {
+        return Result.success(${table.entityPath}Service.saveOrUpdate(${table.entityPath}));
+    }
+
+    @Operation(summary = "删")
+    @DeleteMapping("/{id}")
+    public Result<Boolean> delete(@PathVariable Long id) {
+        return Result.success(${table.entityPath}Service.removeById(id));
+    }
+
+    @Operation(summary = "批量删除")
+    @PostMapping("/del/batch")
+    public Result<Boolean> delete(@RequestBody List<Long> ids) {
+        return Result.success(${table.entityPath}Service.removeBatchByIds(ids));
+    }
+
+    @Operation(summary = "查询全部")
+    @GetMapping
+    public Result<List<${entity}>> findAll() {
+        return Result.success(${table.entityPath}Service.list());
+    }
+
+    @Operation(summary = "按id查询")
+    @GetMapping("/{id}")
+    public Result<${entity}> findOne(@PathVariable Long id) {
+        return Result.success(${table.entityPath}Service.getById(id));
+    }
+
+    @Operation(summary = "分页查询")
+    @GetMapping("/page")
+    public Result<Page<${entity}>> findPage(@RequestParam Integer pageNum,
+                                            @RequestParam Integer pageSize) {
+
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+        return Result.success(${table.entityPath}Service.page(new Page<>(pageNum, pageSize), queryWrapper));
+    }
+}
+
+#end

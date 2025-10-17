@@ -1,0 +1,77 @@
+server:
+  port: 9095
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: telemetry_parser
+  datasource:
+    url: jdbc:mysql://localhost:3306/sat_com_db?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+  activemq:
+    broker-url: tcp://localhost:61616
+    # 消息不放在内存中
+    in-memory: false
+    pool:
+      # 是否使用连接池
+      enabled: true
+      # 连接池最大连接数
+      max-connections: 2
+    user: admin
+    password: 123456
+
+# 异步线程配置
+async:
+  executor:
+    thread:
+      # 配置核心线程数
+      core_pool_size: 5
+      # 配置最大线程数
+      max_pool_size: 5
+      # 配置队列大小
+      queue_capacity: 99999
+      # 配置线程池中的线程的名称前缀
+      name:
+        prefix: async-service-
+
+#下面这些内容是为了让MyBatis映射
+#指定Mybatis的Mapper文件
+mybatis-plus:
+  mapper-locations: classpath:mappers/*xml
+  #指定Mybatis的实体目录
+  type-aliases-package: com.hit.telemetry_parser.entity
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+springdoc:
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+    path: /documents/v3/api-docs
+  swagger-ui:
+    # 持久化认证数据，如果设置为 true，它会保留授权数据并且不会在浏览器关闭/刷新时丢失
+    persistAuthorization: true
+    path: /documents/swagger-ui/index.html
+
+#SLF4J日志配置
+logging:
+  level:
+    root: info
+    # 约束求解器日志
+    org.optaplanner: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %clr(%5p) [%thread] %clr(%logger{45}){cyan} : %msg%n"
+
+files:
+  upload:
+    path: src/main/resources/lib/files/
+
+netty:
+#  host: 192.168.43.209
+  host: 127.0.0.1
+#  port: 9000
+  port: 3037

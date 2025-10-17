@@ -1,0 +1,57 @@
+{
+  "name": "@cesiumgs/ion-sdk-widgets",
+  "version": "1.0.0",
+  "description": "A widgets library for use with Cesium Analytics SDK. Cesium Analytics SDK is a JavaScript library to extend your Cesium-based apps with GPU-accelerated analysis tools.",
+  "license": "SEE LICENSE IN sla-cesium-ion-components.pdf",
+  "repository": "https://github.com/CesiumGS/cesium-analytics",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@CesiumGS"
+  },
+  "keywords": [
+    "3D",
+    "webgl",
+    "geospatial",
+    "map",
+    "globe",
+    "widgets"
+  ],
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "Source/**",
+    "README.md"
+  ],
+  "sideEffects": [
+    "./Source/**/*.css",
+    "./Specs/**/*"
+  ],
+  "dependencies": {
+    "@cesiumgs/engine": "2.4.1",
+    "@cesiumgs/widgets": "2.3.0"
+  },
+  "type": "module",
+  "scripts": {
+    "coverage": "gulp coverage --workspace @cesiumgs/ion-sdk-widgets",
+    "test": "gulp test --production",
+    "postversion": "gulp postversion --workspace @cesiumgs/ion-sdk-widgets",
+    "start": "node server.js --production",
+    "start-public": "node server.js --public --production",
+    "test-all": "gulp test --all --production",
+    "test-webgl": "gulp test --include WebGL --production",
+    "test-non-webgl": "gulp test --exclude WebGL --production",
+    "test-webgl-validation": "gulp test --webglValidation --production",
+    "test-webgl-stub": "gulp test --webglStub --production",
+    "test-release": "gulp test --release --production"
+  },
+  "homepage": "https://cesium.com/platform/cesiumjs/ion-sdk/",
+  "author": {
+    "name": "Cesium GS, Inc.",
+    "url": "https://cesium.com"
+  },
+  "bugs": {
+    "url": "https://github.com/CesiumGS/cesium/issues"
+  }
+}

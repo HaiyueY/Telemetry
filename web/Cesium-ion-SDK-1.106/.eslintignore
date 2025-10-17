@@ -1,0 +1,29 @@
+Apps/HelloWorld.html
+Apps/Sandcastle/ThirdParty/**
+Build/**
+Documentation/**
+Source/**
+Specs/jasmine/**
+ThirdParty/**
+Tools/**
+Apps/Sandcastle/jsHintOptions.js
+Apps/Sandcastle/gallery/gallery-index.js
+index.html
+index.release.html
+
+
+# packages/engine
+packages/engine/Build/**
+packages/engine/Source/Scene/GltfPipeline/**
+packages/engine/Source/Shaders/**
+packages/engine/Source/ThirdParty/**
+packages/engine/Source/Workers/**
+!packages/engine/Source/Workers/transferTypedArrayTest.js
+
+# packages/widgets
+packages/widgets/Build/**
+packages/widgets/Source/ThirdParty/**
+
+# packages/ion-sdk-widgets
+packages/ion-sdk-widgets/Build/**
+packages/ion-sdk-widgets/Source/ThirdParty/**
